@@ -31,13 +31,16 @@ def jaccardSimilarity(s1, s2):
 
 
 def plotTestRes(X, y, title, dataset_name):
+    print('  drawing the graph...')
     sys.path.append("..")
     colors = np.array(list(islice(
         cycle(['#377eb8', '#ff7f00', '#4daf4a', '#f781bf', '#a65628', '#984ea3', '#999999', '#e41a1c', '#dede00']),
         int(max(y) + 1))))
     plt.title(title)
     plt.scatter(X[:, 0], X[:, 1], s=10, color=colors[y])
-    plt.savefig("./figs/"+str(dataset_name)+'/'+str(title)+".png")
+    save_file_path = "./figs/"+str(dataset_name)+'/'+str(title)+".png"
+    plt.savefig(save_file_path)
+    print('  drawing done. The drawing is saved in [' + save_file_path +']')
     plt.close('all')
 
 
@@ -58,7 +61,7 @@ def genGraphFromAdjacent(Adjacent, matInx2bIds=None):
 
 def draw_graph(G, weight_edge_flag=False, save_file_path='Graph.png', pos=None):
     """ generate a viewable view of the graph """
-    print('drawing the graph...')
+    print('  drawing the graph...')
     plt.rcParams['figure.figsize']= (20, 20)
     # positions for all nodes
     if not pos:
@@ -79,7 +82,7 @@ def draw_graph(G, weight_edge_flag=False, save_file_path='Graph.png', pos=None):
         nx.draw_networkx_edge_labels(G, pos, edge_labels=weights, font_size=14)
         
     plt.savefig(save_file_path, dpi=200)
-    print('drawing done. The drawing is saved in [' + save_file_path +']')
+    print('  drawing done. The drawing is saved in [' + save_file_path +']')
     #plt.show()
     plt.close('all')
     return pos
@@ -87,7 +90,7 @@ def draw_graph(G, weight_edge_flag=False, save_file_path='Graph.png', pos=None):
 
 def draw_Graph_with_clustering(G, bid2cid, weight_edge_flag=False, save_file_path='Graph_res.png', pos=None):
     """ generate a viewable view of the graph """
-    print('drawing the graph...')
+    print('  drawing the graph...')
     plt.rcParams['figure.figsize']= (20, 20)
 
     colors = ['#377eb8', '#ff7f00', '#4daf4a', '#f781bf', '#a65628', '#984ea3', '#999999', '#e41a1c', '#dede00']
@@ -117,7 +120,7 @@ def draw_Graph_with_clustering(G, bid2cid, weight_edge_flag=False, save_file_pat
         nx.draw_networkx_edge_labels(G, pos, edge_labels=e_lables, font_size=14)
         
     plt.savefig(save_file_path, dpi=200)
-    print('drawing done. The drawing is saved in [' + save_file_path +']')
+    print('  drawing done. The drawing is saved in [' + save_file_path +']')
     #plt.show()
     plt.close('all')
     return pos, del_edges

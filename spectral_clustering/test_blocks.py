@@ -30,8 +30,8 @@ def testCutMethod(SimMatrix, G, G_pos, save_path='figs/data_blocks/sc_Full', clu
         cid = sp_kmeans.labels_[i]
         bid2cid[bid] = cid
         cid2bids[cid].append(bid)
-    print(bid2cid)
-    print(cid2bids)
+    #print(bid2cid)
+    print(" cluster result: ", list(cid2bids.values()))
     # plot the results
     save_path += '_'+str(cut_method)+'.png'
     draw_Graph_with_clustering(G, bid2cid, pos=G_pos, weight_edge_flag=True, save_file_path=save_path)
@@ -41,11 +41,15 @@ def testCutMethod(SimMatrix, G, G_pos, save_path='figs/data_blocks/sc_Full', clu
 if __name__ == '__main__':
     cluster_num = 9
     # Get blocks
+    print('----------------- block dataset -----------------')
     blocks = genBlocks(products_num=100,max_block=5,blocks_num=20)
-    print(blocks)
+    for bid,block in blocks.items():
+        print(str(bid) + " : " + str(block))
+    print('-------------- spectral clustering --------------')
     
     # testing
     for sim_method in ['Full', 'ENbrs', 'KNN']:
+        print('\n -- sim_method:' + sim_method + ' --')
         if sim_method == 'ENbrs':
             S, G, G_pos = testSimMethod(blocks, sim_method=sim_method, param=0.1)
         elif sim_method == 'KNN':
@@ -53,6 +57,7 @@ if __name__ == '__main__':
         else:
             S, G, G_pos = testSimMethod(blocks, sim_method=sim_method)
         for cut_method in ['RCut', 'NCut']:
+            print(' [ cut_method:' + cut_method + ' ]')
             save_path = 'figs/data_blocks/sc_'+str(sim_method)
             testCutMethod(S, G, G_pos, save_path=save_path, cluster_num=cluster_num, cut_method=cut_method)
 

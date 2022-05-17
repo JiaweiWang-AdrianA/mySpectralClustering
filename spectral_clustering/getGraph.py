@@ -58,7 +58,7 @@ def genSimMatrixFromSimOrgMatrix(S_org, method='KNN', param=None):
             dist_with_index = zip(S_org[i], range(N))
             dist_with_index = sorted(dist_with_index, key=lambda x:x[0], reverse=True)
             nbrs_id = [dist_with_index[m][1] for m in range(min(k+1,N))] 
-            print(str(i)+':'+str(nbrs_id))
+            #print(str(i)+':'+str(nbrs_id))
             for j in nbrs_id:
                 S[i][j] = S_org[i][j] if i != j else 0
         # Averaging to generate symmetric matrix

@@ -9,9 +9,9 @@ def test(data, dataset_name='data_1', cluster_num=2, sim_method='KNN', sigma=0.2
     # Generate Graph 
     # get Similarity Matrix
     S_g = calGaussianSimMatrixFromData(data, sigma=sigma)
-    print("S_g:", S_g)
+    # print("S_g:", S_g)
     S = genSimMatrixFromSimOrgMatrix(S_g, method=sim_method, param=param)
-    print("S:", S)
+    # print("S:", S)
 
     # Cut Graph
     sp_kmeans = calOptimalIndicatorByKMeans(S, cut_method=cut_method, cluster_num=cluster_num, k=kmeans_k)
@@ -35,11 +35,13 @@ if __name__ == '__main__':
     # np.random.seed(1)
     cluster_num = 2
     # Get Dataset
+    print('------------------ get dataset ------------------')
     data1, label1 = genTwoCircles(n_samples=200) #返回data(生成的样本),label(每个样本的类成员的整数标签0或1)
     data2, label2 = genMoons(n_samples=200)
     # plot the correct result
     plotTestRes(data1, label1, 'real_labels', 'data_1')
     plotTestRes(data2, label2, 'real_labels', 'data_2')
+    print('-------------- spectral clustering --------------')
 
     # plot the kmeans result
     pure_kmeans1 = KMeans(n_clusters=cluster_num).fit(data1)
@@ -51,7 +53,10 @@ if __name__ == '__main__':
     for sigma in [0.1, 0.5, 1]:
         for sim_method in ['Full', 'ENbrs', 'KNN']:
             for cut_method in ['RCut', 'NCut']:
+                print('\n - sim_method:' + sim_method + ', cut_method:' + cut_method + ', sigma:' + str(sigma))
+                print(' [dataset] circles')
                 test(data1, 'data_1', sim_method=sim_method, cut_method=cut_method, cluster_num=cluster_num, sigma=sigma)
+                print(' [dataset] moons')
                 test(data2, 'data_2', sim_method=sim_method, cut_method=cut_method, cluster_num=cluster_num, sigma=sigma)
 
 
